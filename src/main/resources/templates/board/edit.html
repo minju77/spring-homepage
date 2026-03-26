@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시글 수정</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6fb;
+}
+
+.container{
+width:700px;
+margin:auto;
+margin-top:100px;
+background:white;
+padding:40px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+input, textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+margin-bottom:20px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 20px;
+background:#4f7cff;
+color:white;
+border:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>게시글 수정</h2>
+
+<form th:action="@{/board/edit/{id}(id=${board.id})}" method="post">
+
+제목
+<input type="text" name="title" th:value="${board.title}">
+
+내용
+<textarea name="content" th:text="${board.content}"></textarea>
+
+<button type="submit">수정 완료</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

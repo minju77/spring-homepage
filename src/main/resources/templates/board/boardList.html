@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시판</title>
+
+<style>
+
+body{
+background:#e5e7eb;
+font-family:Arial;
+}
+
+.container{
+width:900px;
+margin:auto;
+margin-top:100px;
+}
+
+table{
+width:100%;
+background:white;
+border-collapse:collapse;
+box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+th{
+background:#4f7cff;
+color:white;
+padding:15px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+a{
+text-decoration:none;
+color:black;
+font-weight:bold;
+}
+
+.write{
+margin-bottom:20px;
+display:inline-block;
+padding:10px 20px;
+background:#4f7cff;
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<a href="/board/write" class="write">글 작성</a>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>제목</th>
+<th>작성자</th>
+</tr>
+
+<tr th:each="board : ${boards}">
+
+<td th:text="${board.id}"></td>
+
+<td>
+<a th:href="@{/board/{id}(id=${board.id})}"
+   th:text="${board.title}">
+</a>
+</td>
+
+<td th:text="${board.user.username}"></td>
+
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>

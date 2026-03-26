@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#e5e7eb;
+}
+
+.container{
+width:400px;
+margin:auto;
+margin-top:120px;
+background:white;
+padding:40px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+input{
+width:100%;
+padding:10px;
+margin-bottom:15px;
+}
+
+button{
+width:100%;
+padding:10px;
+background:#4f7cff;
+color:white;
+border:none;
+}
+
+</style>
+
+<script>
+
+function checkPassword(){
+
+let pw = document.getElementById("password").value;
+let pw2 = document.getElementById("password2").value;
+
+if(pw !== pw2){
+alert("비밀번호가 일치하지 않습니다");
+return false;
+}
+
+return true;
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>회원가입</h2>
+
+<form action="/user/signup" method="post" onsubmit="return checkPassword()">
+
+<input type="text" name="username" placeholder="아이디">
+
+<input type="password" id="password" name="password" placeholder="비밀번호">
+
+<input type="password" id="password2" placeholder="비밀번호 확인">
+
+<button type="submit">회원가입</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

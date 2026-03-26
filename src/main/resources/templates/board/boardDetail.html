@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시글</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6fb;
+margin:0;
+}
+
+.container{
+width:800px;
+margin:auto;
+margin-top:80px;
+background:white;
+padding:40px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+border-radius:10px;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.writer{
+color:#666;
+margin-bottom:20px;
+}
+
+.content{
+line-height:1.6;
+margin-top:20px;
+}
+
+hr{
+margin:30px 0;
+}
+
+.comment-box{
+margin-top:30px;
+}
+
+textarea{
+width:100%;
+height:100px;
+padding:10px;
+font-size:14px;
+border:1px solid #ccc;
+border-radius:5px;
+resize:none;
+}
+
+button{
+margin-top:10px;
+padding:10px 20px;
+background:#4f7cff;
+border:none;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#3d63d1;
+}
+
+.back{
+display:inline-block;
+margin-top:30px;
+text-decoration:none;
+color:#4f7cff;
+font-weight:bold;
+}
+
+/* 댓글 영역 */
+
+.comment-list{
+margin-top:40px;
+}
+
+.comment{
+border-bottom:1px solid #eee;
+padding:15px 0;
+}
+
+.comment-user{
+font-weight:bold;
+color:#333;
+margin-bottom:5px;
+}
+
+.comment-content{
+color:#555;
+}
+
+.no-comment{
+color:#888;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="title" th:text="${board.title}"></div>
+
+<div class="writer">
+작성자 : <span th:text="${board.user.username}"></span>
+</div>
+
+<hr>
+
+<div class="content" th:text="${board.content}"></div>
+
+<div class="comment-box">
+
+<h3>댓글 작성</h3>
+
+<form action="/comment/write" method="post">
+
+<input type="hidden" name="boardId" th:value="${board.id}">
+
+<textarea name="content" placeholder="댓글을 입력하세요"></textarea>
+
+<br>
+
+<button type="submit">댓글 작성</button>
+
+</form>
+
+</div>
+
+<div th:if="${session.loginUser != null and session.loginUser.id == board.user.id}">
+
+<a th:href="@{/board/edit/{id}(id=${board.id})}">
+<button>수정</button>
+</a>
+
+<form th:action="@{/board/delete/{id}(id=${board.id})}" method="post" style="display:inline;">
+<button type="submit">삭제</button>
+</form>
+
+</div>
+
+<div class="comment-list">
+
+<h3>댓글</h3>
+
+<div th:if="${#lists.isEmpty(comments)}" class="no-comment">
+댓글이 없습니다.
+</div>
+
+<div th:each="comment : ${comments}" class="comment">
+
+<div class="comment-user">
+
+<span th:text="${comment.user.username}"></span>
+
+<form th:if="${session.loginUser != null and session.loginUser.id == comment.user.id}"
+      th:action="@{/comment/delete/{id}(id=${comment.id})}"
+      method="post"
+      style="display:inline">
+
+<button type="submit">삭제</button>
+
+</form>
+
+</div>
+
+<div class="comment-content" th:text="${comment.content}"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<a href="/board/list" class="back">목록으로</a>
+
+</div>
+
+</body>
+</html>
